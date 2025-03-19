@@ -1010,6 +1010,8 @@
     <string name="task_resend_desc" formatted="false">自動重發%s小時以來%s的轉發記錄</string>
     <string name="task_resend_error">必须至少选择一個「原轉發狀態」</string>
     <string name="task_task">啟停任務</string>
+    <string name="task_reboot">重啟</string>
+    <string name="task_reboot_tips">直接重啟手機</string>
     <string name="task_task_tips">控制【自動任務】的啟用/禁用</string>
 
     <string name="second">秒</string>

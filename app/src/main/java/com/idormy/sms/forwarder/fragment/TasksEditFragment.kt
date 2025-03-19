@@ -243,6 +243,13 @@ class TasksEditFragment : BaseFragment<FragmentTasksEditBinding?>(), View.OnClic
             CoreAnim.slide,
             R.drawable.auto_task_icon_task
         ),
+        PageInfo(
+            getString(R.string.task_reboot),
+            "",
+            "TASK_ACTION_REBOOT",
+            CoreAnim.slide,
+            R.drawable.auto_task_icon_reboot
+        )
     )
 
     override fun initArgs() {
@@ -591,6 +598,17 @@ class TasksEditFragment : BaseFragment<FragmentTasksEditBinding?>(), View.OnClic
                         return
                     }
                 }
+            }
+
+            //添加重启动作
+            if ("" == widgetInfo.classPath && "TASK_ACTION_REBOOT" == widgetInfo.params) {
+                val description: String = widgetInfo.name.toString()
+                val taskSetting = TaskSetting(TASK_ACTION_REBOOT, widgetInfo.name, description, "", 0)
+                taskSetting.position = conditionsList.size
+                conditionsList.add(taskSetting)
+                conditionsAdapter.notifyItemInserted(conditionsList.size - 1)
+                binding!!.layoutAddCondition.visibility = if (conditionsList.size >= MAX_SETTING_NUM) View.GONE else View.VISIBLE
+                return
             }
 
             @Suppress("UNCHECKED_CAST") PageOption.to(Class.forName(widgetInfo.classPath) as Class<XPageFragment>) //跳转的fragment

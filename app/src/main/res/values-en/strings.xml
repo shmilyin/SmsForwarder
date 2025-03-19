@@ -1009,6 +1009,8 @@
     <string name="task_resend_desc" formatted="false">Resend forwarding records since %s hours ago for %s</string>
     <string name="task_resend_error">At least one "Original Result" must be selected</string>
     <string name="task_task">Tasks On/Off</string>
+    <string name="task_reboot">Reboot</string>
+    <string name="task_reboot_tips">Reboot your phone directly</string>
     <string name="task_task_tips">Control the enable/disable of the "Auto Task"</string>
 
     <string name="second">Second</string>
