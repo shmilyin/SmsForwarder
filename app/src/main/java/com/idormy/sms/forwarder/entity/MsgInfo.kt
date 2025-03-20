@@ -137,7 +137,7 @@ data class MsgInfo(
             .regexReplace(regexReplace)
             .replaceTag(
                 getString(R.string.tag_startup_time),
-                SystemClock.elapsedRealtime().toHHMMSS(),
+                (SystemClock.elapsedRealtime()/1000).toHHMMSS(),
                 encoderName
             )
             .trim()
