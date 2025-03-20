@@ -14,7 +14,7 @@ plugins {
 }
 
 def keyProps = new Properties()
-def keyPropsFile = rootProject.file('keystore/keystore.properties')
+def keyPropsFile = rootProject.file('keystore.jks')
 if (keyPropsFile.exists()) {
     keyProps.load(new FileInputStream(keyPropsFile))
 }
@@ -60,7 +60,7 @@ android {
     def gitCommitId = getGitCommitId()
 
     defaultConfig {
-        applicationId "com.idormy.sms.forwarder.debug"
+        applicationId "com.idormy.sms.forwarder"
         minSdkVersion build_versions.min_sdk
         targetSdkVersion build_versions.target_sdk
         versionCode build_versions.version_code
@@ -85,16 +85,16 @@ android {
 
     signingConfigs {
         release {
-            keyAlias keyProps['keyAlias']
-            keyPassword keyProps['keyPassword']
-            storeFile keyProps['storeFile'] ? file(keyProps['storeFile']) : null
-            storePassword keyProps['storePassword']
+            storeFile file('./../keystore.jks')
+            storePassword 'storePassword'
+            keyAlias = 'keyAlias'
+            keyPassword 'keyPassword'
         }
         debug {
-            keyAlias keyProps['keyAlias']
-            keyPassword keyProps['keyPassword']
-            storeFile keyProps['storeFile'] ? file(keyProps['storeFile']) : null
-            storePassword keyProps['storePassword']
+            storeFile file('./../keystore.jks')
+            storePassword 'storePassword'
+            keyAlias = 'keyAlias'
+            keyPassword 'keyPassword'
         }
     }
 

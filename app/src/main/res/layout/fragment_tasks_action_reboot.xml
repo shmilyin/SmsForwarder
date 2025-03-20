@@ -49,7 +49,37 @@
                     android:textSize="@dimen/text_size_mini"
                     tools:ignore="SmallSp" />
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="?attr/xui_config_color_separator_light" />
+
+                <RadioGroup
+                    android:id="@+id/rg_status"
+                    style="@style/rg_style"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/config_padding_5dp">
+
+                    <RadioButton
+                        android:id="@+id/rb_status_enable"
+                        style="@style/rg_rb_style"
+                        android:checked="true"
+                        android:text="@string/task_reboot_method_broadcast"
+                        tools:ignore="TouchTargetSizeCheck" />
+
+                    <RadioButton
+                        android:id="@+id/rb_status_disable"
+                        style="@style/rg_rb_style"
+                        android:text="@string/task_reboot_method_su"
+                        tools:ignore="TouchTargetSizeCheck" />
+
+                </RadioGroup>
             </LinearLayout>
+
+
 
         </LinearLayout>
 

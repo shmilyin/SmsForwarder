@@ -1010,7 +1010,10 @@
     <string name="task_resend_error">At least one "Original Result" must be selected</string>
     <string name="task_task">Tasks On/Off</string>
     <string name="task_reboot">Reboot</string>
-    <string name="task_reboot_tips">Reboot your phone directly</string>
+    <string name="task_reboot_tips">Restart the phone directly, which requires system signature or root permission</string>
+    <string name="task_reboot_method">Reboot Method</string>
+    <string name="task_reboot_method_broadcast">Use Broadcast</string>
+    <string name="task_reboot_method_su">Use su</string>
     <string name="task_task_tips">Control the enable/disable of the "Auto Task"</string>
 
     <string name="second">Second</string>
@@ -1140,6 +1143,7 @@
     <string name="all_auto_started_frpc">All auto-started Frpc</string>
     <string name="specified_frpc">Specified Frpc</string>
     <string name="successful_execution">Execution successful: %s</string>
+    <string name="failed_execution">Execution failed: %s error:%s</string>
 
     <string name="enable_accessibility_service">Enable Accessibility Service</string>
     <string name="assists_description">Automate SMS confirmation and maintain app activity in the background.</string>

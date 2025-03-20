@@ -75,13 +75,12 @@ class RebootFragment : BaseFragment<FragmentTasksActionRebootBinding?>(), View.O
             }
         })
 
-        var settingVo = RebootSetting(getString(R.string.task_reboot_tips), 0)
+        var settingVo = RebootSetting(getString(R.string.task_reboot_tips))
         Log.d(TAG, "initViews eventData:$eventData")
         if (eventData != null) {
             settingVo = Gson().fromJson(eventData, RebootSetting::class.java)
             Log.d(TAG, "initViews settingVo:$settingVo")
         }
-        binding!!.xsbDays.setDefaultValue(settingVo.days)
     }
 
     @SuppressLint("SetTextI18n")
@@ -140,8 +139,15 @@ class RebootFragment : BaseFragment<FragmentTasksActionRebootBinding?>(), View.O
     //检查设置
     @SuppressLint("SetTextI18n")
     private fun checkSetting(): RebootSetting {
-        val days = binding!!.xsbDays.selectedNumber
-        val description = String.format(getString(R.string.task_reboot_tips))
-        return RebootSetting(description, days)
+        val description = StringBuilder()
+        val status: Int
+        if (binding!!.rgStatus.checkedRadioButtonId == R.id.rb_status_enable) {
+            status = 1
+            description.append(getString(R.string.task_reboot_method_broadcast))
+        } else {
+            status = 0
+            description.append(getString(R.string.task_reboot_method_su))
+        }
+        return RebootSetting(description.toString(), status)
     }
 }

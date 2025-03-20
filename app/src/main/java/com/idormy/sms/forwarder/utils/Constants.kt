@@ -303,6 +303,7 @@ val TAG_LIST = arrayOf(
     mapOf("zh_CN" to "{{卡槽主键}}", "zh_TW" to "{{卡槽主鍵}}", "en" to "{{CARD_SUBID}}"),
     mapOf("zh_CN" to "{{接收时间}}", "zh_TW" to "{{接收時間}}", "en" to "{{RECEIVE_TIME}}"),
     mapOf("zh_CN" to "{{当前时间}}", "zh_TW" to "{{當前時間}}", "en" to "{{CURRENT_TIME}}"),
+    mapOf("zh_CN" to "{{启动时长}}", "zh_TW" to "{{啟動時長}}", "en" to "{{STARTUP_TIME}}"),
     mapOf("zh_CN" to "{{设备名称}}", "zh_TW" to "{{設備名稱}}", "en" to "{{DEVICE_NAME}}"),
     mapOf("zh_CN" to "{{当前应用版本号}}", "zh_TW" to "{{當前應用版本號}}", "en" to "{{APP_VERSION}}"),
     mapOf("zh_CN" to "{{通知标题}}", "zh_TW" to "{{通知標題}}", "en" to "{{TITLE}}"),

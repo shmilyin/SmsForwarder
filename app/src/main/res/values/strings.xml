@@ -8,6 +8,7 @@
     <string name="tag_card_subid" translatable="false">{{CARD_SUBID}}</string>
     <string name="tag_receive_time" translatable="false">{{RECEIVE_TIME}}</string>
     <string name="tag_current_time" translatable="false">{{CURRENT_TIME}}</string>
+    <string name="tag_startup_time" translatable="false">{{STARTUP_TIME}}</string>
     <string name="tag_device_name" translatable="false">{{DEVICE_NAME}}</string>
     <string name="tag_app_version" translatable="false">{{APP_VERSION}}</string>
     <string name="tag_title" translatable="false">{{TITLE}}</string>
@@ -1040,7 +1041,10 @@
     <string name="task_resend_error">必须至少选择一个【原转发状态】</string>
     <string name="task_task">启停任务</string>
     <string name="task_reboot">重启</string>
-    <string name="task_reboot_tips">直接重启手机</string>
+    <string name="task_reboot_tips">直接重启手机，需要系统签名或者root权限</string>
+    <string name="task_reboot_method">重启方式</string>
+    <string name="task_reboot_method_broadcast">使用Broadcast广播重启</string>
+    <string name="task_reboot_method_su">使用su重启</string>
     <string name="task_task_tips">控制【自动任务】的启用/禁用</string>
 
     <string name="second">秒</string>
@@ -1170,6 +1174,7 @@
     <string name="all_auto_started_frpc">所有自启动的Frpc</string>
     <string name="specified_frpc">指定的Frpc</string>
     <string name="successful_execution">执行成功：%s</string>
+    <string name="failed_execution">执行失败：%s 错误原因：%s</string>
 
     <string name="enable_accessibility_service">启用无障碍服务</string>
     <string name="assists_description">实现自动确认发送短信与APP后台保活</string>

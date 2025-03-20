@@ -1,6 +1,7 @@
 package com.idormy.sms.forwarder.entity
 
 import android.annotation.SuppressLint
+import android.os.SystemClock
 import android.text.TextUtils
 import com.google.gson.Gson
 import com.idormy.sms.forwarder.App
@@ -22,6 +23,7 @@ import java.io.Serializable
 import java.net.URLEncoder
 import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Locale
 
 @Suppress("unused")
 data class MsgInfo(
@@ -133,6 +135,11 @@ data class MsgInfo(
             .replaceContactNameTag(encoderName)
             .replacePhoneAreaTag(encoderName)
             .regexReplace(regexReplace)
+            .replaceTag(
+                getString(R.string.tag_startup_time),
+                SystemClock.elapsedRealtime().toHHMMSS(),
+                encoderName
+            )
             .trim()
     }
 
@@ -268,6 +275,18 @@ data class MsgInfo(
             .replaceTag(getString(R.string.tag_location_longitude), location.longitude.toString())
             .replaceTag(getString(R.string.tag_location_latitude), location.latitude.toString())
             .replaceTag(getString(R.string.tag_location_address), address)
+    }
+
+    //转换开机启动时长
+    fun Long.toHHMMSS(): String {
+        require(this >= 0) { "秒数不能为负数" }
+
+        val hours = this / 3600
+        val remaining = this % 3600
+        val minutes = remaining / 60
+        val seconds = remaining % 60
+
+        return String.format("%02d:%02d:%02d", hours, minutes, seconds)
     }
 
     //直接插入json字符串需要转义

@@ -1011,7 +1011,10 @@
     <string name="task_resend_error">必须至少选择一個「原轉發狀態」</string>
     <string name="task_task">啟停任務</string>
     <string name="task_reboot">重啟</string>
-    <string name="task_reboot_tips">直接重啟手機</string>
+    <string name="task_reboot_tips">直接重新啟動手機，需要係統簽章或root權限</string>
+    <string name="task_reboot_method">重啟方式</string>
+    <string name="task_reboot_method_broadcast">使用Broadcast廣播重啟</string>
+    <string name="task_reboot_method_su">使用su重啟</string>
     <string name="task_task_tips">控制【自動任務】的啟用/禁用</string>
 
     <string name="second">秒</string>
@@ -1141,6 +1144,7 @@
     <string name="all_auto_started_frpc">所有自動啟動的Frpc</string>
     <string name="specified_frpc">特定的Frpc</string>
     <string name="successful_execution">執行成功：%s</string>
+    <string name="failed_execution">執行失敗：%s 錯誤原因：%s</string>
 
     <string name="enable_accessibility_service">啟用無障礙服務</string>
     <string name="assists_description">實現自動確認發送簡訊與應用程式後台保持活躍</string>

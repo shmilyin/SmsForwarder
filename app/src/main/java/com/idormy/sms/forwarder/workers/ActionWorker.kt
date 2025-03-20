@@ -20,6 +20,7 @@ import com.idormy.sms.forwarder.entity.action.AlarmSetting
 import com.idormy.sms.forwarder.entity.action.CleanerSetting
 import com.idormy.sms.forwarder.entity.action.FrpcSetting
 import com.idormy.sms.forwarder.entity.action.HttpServerSetting
+import com.idormy.sms.forwarder.entity.action.RebootSetting
 import com.idormy.sms.forwarder.entity.action.ResendSetting
 import com.idormy.sms.forwarder.entity.action.RuleSetting
 import com.idormy.sms.forwarder.entity.action.SenderSetting
@@ -46,6 +47,7 @@ import com.idormy.sms.forwarder.utils.TASK_ACTION_CLEANER
 import com.idormy.sms.forwarder.utils.TASK_ACTION_FRPC
 import com.idormy.sms.forwarder.utils.TASK_ACTION_HTTPSERVER
 import com.idormy.sms.forwarder.utils.TASK_ACTION_NOTIFICATION
+import com.idormy.sms.forwarder.utils.TASK_ACTION_REBOOT
 import com.idormy.sms.forwarder.utils.TASK_ACTION_RESEND
 import com.idormy.sms.forwarder.utils.TASK_ACTION_RULE
 import com.idormy.sms.forwarder.utils.TASK_ACTION_SENDER
@@ -59,6 +61,14 @@ import com.xuexiang.xrouter.utils.TextUtils
 import com.xuexiang.xutil.XUtil
 import com.xuexiang.xutil.resource.ResUtils.getString
 import frpclib.Frpclib
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.TimeoutCancellationException
+import kotlinx.coroutines.withContext
+import kotlinx.coroutines.withTimeout
+import java.io.BufferedReader
+import java.io.DataOutputStream
+import java.io.IOException
+import java.io.InputStreamReader
 import java.util.Calendar
 
 //执行每个task具体动作任务
@@ -334,6 +344,68 @@ class ActionWorker(context: Context, params: WorkerParameters) : CoroutineWorker
                         writeLog(String.format(getString(R.string.successful_execution), taskActionSetting.description), "SUCCESS")
                     }
 
+                    TASK_ACTION_REBOOT -> {
+                        val rebootSetting = Gson().fromJson(action.setting, RebootSetting::class.java)
+                        if (rebootSetting == null) {
+                            writeLog("rebootSetting is null")
+                            continue
+                        }
+
+                        if (rebootSetting.rebootMethod == 1) {
+                            //使用广播重启
+                            try {
+                                val reboot = Intent(Intent.ACTION_REBOOT);
+                                reboot.putExtra("nowait", 1);
+                                reboot.putExtra("interval", 1);
+                                reboot.putExtra("window", 0);
+                                App.context.sendBroadcast(reboot);
+                            } catch (ex: Exception) {
+                                ex.printStackTrace()
+                                writeLog(String.format(getString(R.string.failed_execution), rebootSetting.description, ex.message), "ERROR")
+                                break
+                            }
+                        } else {
+                            //使用su重启
+                            var process: Process? = null
+                            try {
+                                process = Runtime.getRuntime().exec("su")
+                                val os = DataOutputStream(process.outputStream)
+
+                                // 执行命令
+                                os.writeBytes("reboot\n")
+                                os.flush()
+
+                                // 设置超时销毁
+                                withTimeout(5000) {
+                                    process.waitFor() // 等待命令执行（实际可能无法完成）
+                                }
+                            } catch (ex: Exception) {
+                                when (ex) {
+                                    is IOException -> {
+                                        Log.e("Reboot", "IO 错误: ${ex.message}")
+                                        writeLog(String.format(getString(R.string.failed_execution), rebootSetting.description, ex.message), "ERROR")
+                                        break
+                                    }
+                                    is TimeoutCancellationException -> {
+                                        Log.w("Reboot", "超时但已触发重启")
+                                        writeLog(String.format(getString(R.string.failed_execution), rebootSetting.description, ex.message), "ERROR")
+                                        break
+                                    }
+                                    else -> {
+                                        Log.e("Reboot", "未知错误", ex)
+                                        writeLog(String.format(getString(R.string.failed_execution), rebootSetting.description, ex.message), "ERROR")
+                                        break
+                                    }
+                                }
+                            } finally {
+                                process?.destroy()
+                            }
+                        }
+
+                        successNum++
+                        writeLog(String.format(getString(R.string.successful_execution), rebootSetting.description), "SUCCESS")
+                    }
+
                     TASK_ACTION_ALARM -> {
                         val alarmSetting = Gson().fromJson(action.setting, AlarmSetting::class.java)
                         if (alarmSetting == null) {
@@ -378,6 +450,7 @@ class ActionWorker(context: Context, params: WorkerParameters) : CoroutineWorker
 
         return if (successNum == actionList.size) Result.success() else Result.failure()
     }
+
 
     private fun writeLog(msg: String, level: String = "DEBUG") {
         val key = when (level) {
